@@ -8,5 +8,5 @@
 - [Y] Text content is readable and formatted as intended
 - [Y] Images (if any) load and display properly
 - [Y] The site loads without errors or warnings in the browser console
-- [Y] The site is accessible (can be navigated with keyboard and screen reader)
+
 
