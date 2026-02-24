@@ -7,9 +7,10 @@
 - Footer: Contact or additional notes
 
 ## Layout Choices
-- Single-page layout for simplicity and ease of navigation
+- Single-page layout for simplicity and ease of navigation, as no more than one page was required
 - All content is organized vertically with clear section headings
-- No navigation bar, as the content fits comfortably on one page
+- No navigation bar, as the content fits comfortably on one page and thus is not required
 
 ## Design Rationale
-I chose a single-page layout to keep the website simple and beginner-friendly, both for myself as the creator and for visitors. By organizing the content into clear sections (About, Projects), users can quickly find information without clicking through multiple pages. This structure also makes it easier to maintain and update as I add more projects or information in the future. The straightforward design ensures accessibility and a smooth experience on both desktop and mobile devices.
+I chose a single-page layout to keep the website simple and beginner-friendly, both for myself as the creator who just started learning to code and for visitors. By organizing the content into clear sections (About, Projects), users can quickly find information without clicking through multiple pages. This structure also makes it easier to maintain and update as I add more projects or information in the future. The straightforward design ensures accessibility and a smooth experience on both desktop and mobile devices, and the minimalist look helps keep things uncluttered.
+
