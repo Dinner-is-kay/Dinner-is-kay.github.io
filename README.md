@@ -1,1 +1,1 @@
-# Dinner-is-kay.github.io
+# Wyatt leopold Intro to AI
