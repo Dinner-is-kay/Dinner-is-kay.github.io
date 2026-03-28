@@ -64,16 +64,17 @@ function playSound(frequency, duration, type = 'square') {
 }
 
 function getState() {
-    let relX = Math.floor((ball.x - paddle.x) / 50); // coarser: 50px bins
+    let paddleX = Math.floor(paddle.x / 80);
+    let relX = Math.floor((ball.x - paddle.x) / 25); // finer bins for better precision
     let ballY = Math.floor(ball.y / 60);
     let ballDirX = ball.dx > 0 ? 1 : 0;
     let ballDirY = ball.dy > 0 ? 1 : 0;
-    return `${relX},${ballY},${ballDirX},${ballDirY}`;
+    return `${paddleX},${relX},${ballY},${ballDirX},${ballDirY}`;
 }
 
 function getAction(state, ep) {
     if (!qTable[state]) qTable[state] = [0, 0, 0];
-    let epsilon = Math.max(0.01, 0.1 - ep * 0.000005); // decay epsilon
+    let epsilon = Math.max(0.01, 0.1 - ep * 0.000002); // slower decay
     if (Math.random() < epsilon) return Math.floor(Math.random() * 3);
     return qTable[state].indexOf(Math.max(...qTable[state]));
 }
@@ -321,7 +322,7 @@ document.getElementById('train').addEventListener('click', () => {
 
 function trainAI() {
     let ep = 0;
-    const totalEp = 10000;
+    const totalEp = 50000;
     const batchSize = 100;
 
     function trainBatch() {
