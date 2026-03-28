@@ -64,10 +64,10 @@ function playSound(frequency, duration, type = 'square') {
 }
 
 function getState() {
-    let paddleX = Math.floor(paddle.x / 80);
-    let relX = Math.floor((ball.x - paddle.x) / 25);
-    let ballY = Math.floor(ball.y / 60);
-    return `${paddleX},${relX},${ballY}`;
+    // Use absolute positions so left/right symmetry is preserved
+    let ballX = Math.floor(ball.x / 40);    // 20 bins across canvas
+    let paddleX = Math.floor(paddle.x / 40); // 20 bins across canvas
+    return `${ballX},${paddleX}`;
 }
 
 function getAction(state, ep) {
@@ -81,7 +81,7 @@ function updateQ(state, action, reward, nextState) {
     if (!qTable[state]) qTable[state] = [0, 0, 0];
     if (!qTable[nextState]) qTable[nextState] = [0, 0, 0];
     let maxNext = Math.max(...qTable[nextState]);
-    qTable[state][action] += 0.01 * (reward + 0.99 * maxNext - qTable[state][action]); // lower learning rate
+    qTable[state][action] += 0.05 * (reward + 0.95 * maxNext - qTable[state][action]);
 }
 
 function reset() {
@@ -161,11 +161,9 @@ function update() {
     if (aiPlaying) {
         let state = getState();
         let action = getAction(state, episodes);
-        let targetX = paddle.x;
-        if (action === 0) targetX -= 5;
-        else if (action === 2) targetX += 5;
-        targetX = Math.max(0, Math.min(canvas.width - paddle.width, targetX));
-        paddle.x += (targetX - paddle.x) * 0.5; // faster smooth movement
+        if (action === 0) paddle.x -= 10;
+        else if (action === 2) paddle.x += 10;
+        paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
         const aiInfoEl = document.getElementById('aiInfo');
         if (aiInfoEl) aiInfoEl.textContent = `State: ${state}, Action: ${action === 0 ? 'Left' : action === 1 ? 'Stay' : 'Right'}`;
     }
@@ -332,11 +330,9 @@ function trainAI() {
             while (ball.y < canvas.height && steps < 1000 && lives > 0) {
                 let state = getState();
                 let action = getAction(state, ep);
-                let targetX = paddle.x;
-                if (action === 0) targetX -= 5;
-                else if (action === 2) targetX += 5;
-                targetX = Math.max(0, Math.min(canvas.width - paddle.width, targetX));
-                paddle.x += (targetX - paddle.x) * 0.5;
+                if (action === 0) paddle.x -= 10;
+                else if (action === 2) paddle.x += 10;
+                paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
 
                 // Move ball
                 ball.x += ball.dx;
@@ -368,10 +364,13 @@ function trainAI() {
                     }
                 });
 
-                let reward = 1; // increased survival reward
-                if (paddleHit) reward += 5; // reward for hitting ball back
+                // Proximity reward: reward the AI for being under the ball every step
+                let paddleCenter = paddle.x + paddle.width / 2;
+                let proximity = 1 - Math.abs(ball.x - paddleCenter) / canvas.width;
+                let reward = proximity * 3;
+                if (paddleHit) reward += 20;
                 if (hitBrick) reward += 10;
-                if (ball.y > canvas.height) reward = -10;
+                if (ball.y > canvas.height) reward = -50;
 
                 let nextState = getState();
                 updateQ(state, action, reward, nextState);
