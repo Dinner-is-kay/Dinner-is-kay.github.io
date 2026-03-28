@@ -212,73 +212,78 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Touch controls for mobile
-let touchStartX = 0;
-canvas.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-});
-canvas.addEventListener('touchmove', (e) => {
-    if (!aiPlaying && gameRunning && !paused) {
-        e.preventDefault();
-        let touchX = e.touches[0].clientX;
-        let diff = touchX - touchStartX;
-        paddle.x += diff * 0.5;
-        paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
-        touchStartX = touchX;
-    }
-});
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded');
 
-document.getElementById('start').addEventListener('click', () => {
-    gameRunning = true;
-    aiPlaying = false;
-    training = false;
-    paused = false;
-    lives = 3;
-    currentLevel = parseInt(document.getElementById('levelSelect').value);
-    difficulty = document.getElementById('difficulty').value;
-    soundEnabled = document.getElementById('soundEnabled').checked;
-    reset();
-    document.getElementById('pause').textContent = 'Pause';
-});
+    // Touch controls for mobile
+    let touchStartX = 0;
+    canvas.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+    });
+    canvas.addEventListener('touchmove', (e) => {
+        if (!aiPlaying && gameRunning && !paused) {
+            e.preventDefault();
+            let touchX = e.touches[0].clientX;
+            let diff = touchX - touchStartX;
+            paddle.x += diff * 0.5;
+            paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
+            touchStartX = touchX;
+        }
+    });
 
-document.getElementById('pause').addEventListener('click', () => {
-    paused = !paused;
-    document.getElementById('pause').textContent = paused ? 'Resume' : 'Pause';
-});
+    document.getElementById('start').addEventListener('click', () => {
+        console.log('Start clicked');
+        gameRunning = true;
+        aiPlaying = false;
+        training = false;
+        paused = false;
+        lives = 3;
+        currentLevel = parseInt(document.getElementById('levelSelect').value);
+        difficulty = document.getElementById('difficulty').value;
+        soundEnabled = document.getElementById('soundEnabled').checked;
+        reset();
+        document.getElementById('pause').textContent = 'Pause';
+    });
 
-document.getElementById('playAI').addEventListener('click', () => {
-    gameRunning = true;
-    aiPlaying = true;
-    training = false;
-    paused = false;
-    lives = 3;
-    currentLevel = parseInt(document.getElementById('levelSelect').value);
-    difficulty = document.getElementById('difficulty').value;
-    soundEnabled = document.getElementById('soundEnabled').checked;
-    reset();
-    document.getElementById('pause').textContent = 'Pause';
-});
+    document.getElementById('pause').addEventListener('click', () => {
+        paused = !paused;
+        document.getElementById('pause').textContent = paused ? 'Resume' : 'Pause';
+    });
 
-document.getElementById('reset').addEventListener('click', () => {
-    gameRunning = false;
-    aiPlaying = false;
-    training = false;
-    paused = false;
-    lives = 3;
-    score = 0;
-    currentLevel = 1;
-    reset();
-    document.getElementById('pause').textContent = 'Pause';
-});
+    document.getElementById('playAI').addEventListener('click', () => {
+        gameRunning = true;
+        aiPlaying = true;
+        training = false;
+        paused = false;
+        lives = 3;
+        currentLevel = parseInt(document.getElementById('levelSelect').value);
+        difficulty = document.getElementById('difficulty').value;
+        soundEnabled = document.getElementById('soundEnabled').checked;
+        reset();
+        document.getElementById('pause').textContent = 'Pause';
+    });
 
-document.getElementById('train').addEventListener('click', () => {
-    training = true;
-    gameRunning = false;
-    aiPlaying = false;
-    paused = false;
-    difficulty = document.getElementById('difficulty').value;
-    soundEnabled = document.getElementById('soundEnabled').checked;
-    trainAI();
+    document.getElementById('reset').addEventListener('click', () => {
+        gameRunning = false;
+        aiPlaying = false;
+        training = false;
+        paused = false;
+        lives = 3;
+        score = 0;
+        currentLevel = 1;
+        reset();
+        document.getElementById('pause').textContent = 'Pause';
+    });
+
+    document.getElementById('train').addEventListener('click', () => {
+        training = true;
+        gameRunning = false;
+        aiPlaying = false;
+        paused = false;
+        difficulty = document.getElementById('difficulty').value;
+        soundEnabled = document.getElementById('soundEnabled').checked;
+        trainAI();
+    });
 });
 
 function trainAI() {
