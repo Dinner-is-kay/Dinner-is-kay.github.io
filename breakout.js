@@ -20,10 +20,11 @@ let qTable = {};
 
 function getState() {
     let ballX = Math.floor(ball.x / 80);
+    let ballY = Math.floor(ball.y / 60);
     let paddleX = Math.floor(paddle.x / 80);
     let ballDirX = ball.dx > 0 ? 1 : 0;
     let ballDirY = ball.dy > 0 ? 1 : 0;
-    return `${ballX},${paddleX},${ballDirX},${ballDirY}`;
+    return `${ballX},${ballY},${paddleX},${ballDirX},${ballDirY}`;
 }
 
 function getAction(state) {
@@ -152,7 +153,7 @@ document.getElementById('train').addEventListener('click', () => {
 });
 
 function trainAI() {
-    for (let ep = 0; ep < 1000; ep++) {
+    for (let ep = 0; ep < 10000; ep++) {
         reset();
         let steps = 0;
         while (ball.y < canvas.height && steps < 1000) {
@@ -187,7 +188,8 @@ function trainAI() {
                 }
             });
 
-            let reward = hitBrick ? 10 : 0;
+            let reward = 0.1; // small reward for surviving
+            if (hitBrick) reward += 10;
             if (ball.y > canvas.height) reward = -10;
 
             let nextState = getState();
