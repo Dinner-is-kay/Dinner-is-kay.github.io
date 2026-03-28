@@ -117,6 +117,10 @@ function update() {
         lives--;
         playSound(200, 0.5);
         if (lives <= 0) {
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('breakoutHighScore', highScore);
+            }
             gameRunning = false;
             alert('Game Over!');
             return;
