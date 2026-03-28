@@ -40,7 +40,7 @@ function initBricks(level) {
     for (let i = 0; i < config.cols; i++) {
         for (let j = 0; j < config.rows; j++) {
             let include = true;
-            if (config.pattern === 'pyramid' && j > i && j > config.cols - 1 - i) include = false;
+            if (config.pattern === 'pyramid' && (j > i || j > config.cols - 1 - i)) include = false;
             if (config.pattern === 'checker' && (i + j) % 2 === 0) include = false;
             if (include) {
                 bricks.push({ x: i * 80, y: j * 30 + 50, width: 75, height: 25, alive: true });
@@ -64,7 +64,7 @@ function playSound(frequency, duration, type = 'square') {
 }
 
 function getState() {
-    let relX = Math.floor((ball.x - paddle.x) / 25); // finer: 25px bins for better precision
+    let relX = Math.floor((ball.x - paddle.x) / 50); // coarser: 50px bins
     let ballY = Math.floor(ball.y / 60);
     let ballDirX = ball.dx > 0 ? 1 : 0;
     let ballDirY = ball.dy > 0 ? 1 : 0;
@@ -298,14 +298,11 @@ document.getElementById('reset').addEventListener('click', () => {
     document.getElementById('pause').textContent = 'Pause';
 });
 
-document.getElementById('train').addEventListener('click', () => {
-    training = true;
-    gameRunning = false;
-    aiPlaying = false;
-    paused = false;
-    difficulty = document.getElementById('difficulty').value;
-    soundEnabled = document.getElementById('soundEnabled').checked;
-    trainAI();
+document.getElementById('clearAI').addEventListener('click', () => {
+    qTable = {};
+    localStorage.removeItem('breakoutQTable');
+    episodes = 0;
+    alert('AI memory cleared. Train again for best results.');
 });
 
 function trainAI() {
@@ -315,11 +312,9 @@ function trainAI() {
         while (ball.y < canvas.height && steps < 1000 && lives > 0) {
             let state = getState();
             let action = getAction(state, ep);
-            let targetX = paddle.x;
-            if (action === 0) targetX -= 5;
-            else if (action === 2) targetX += 5;
-            targetX = Math.max(0, Math.min(canvas.width - paddle.width, targetX));
-            paddle.x += (targetX - paddle.x) * 0.1; // easing
+            if (action === 0) paddle.x -= 5;
+            else if (action === 2) paddle.x += 5;
+            paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
 
             // Move ball
             ball.x += ball.dx;
