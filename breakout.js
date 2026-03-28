@@ -19,7 +19,7 @@ let training = false;
 let qTable = {};
 
 function getState() {
-    let relX = Math.floor((ball.x - paddle.x) / 50); // relative position in 50px bins
+    let relX = Math.floor((ball.x - paddle.x) / 25); // finer: 25px bins for better precision
     let ballY = Math.floor(ball.y / 60);
     let ballDirX = ball.dx > 0 ? 1 : 0;
     let ballDirY = ball.dy > 0 ? 1 : 0;
@@ -153,7 +153,7 @@ document.getElementById('train').addEventListener('click', () => {
 });
 
 function trainAI() {
-    for (let ep = 0; ep < 10000; ep++) {
+    for (let ep = 0; ep < 20000; ep++) {
         reset();
         let steps = 0;
         while (ball.y < canvas.height && steps < 1000) {
