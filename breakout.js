@@ -15,6 +15,7 @@ let currentLevel = 1;
 let highScore = localStorage.getItem('breakoutHighScore') || 0;
 let difficulty = 'normal';
 let soundEnabled = true;
+let paddleDirection = 0; // -1 left, 0 stop, 1 right
 
 // Audio context for sound effects
 let audioCtx;
@@ -85,7 +86,7 @@ function updateQ(state, action, reward, nextState) {
 }
 
 function reset() {
-    let speed = difficulty === 'easy' ? 1.5 : difficulty === 'hard' ? 3 : 2;
+    let speed = difficulty === 'easy' ? 1 : difficulty === 'hard' ? 2 : 1.5;
     ball = { x: 400, y: 300, dx: speed * (Math.random() > 0.5 ? 1 : -1), dy: speed, radius: 10 };
     paddle = { x: 350, y: 550, width: difficulty === 'easy' ? 120 : difficulty === 'hard' ? 80 : 100, height: 10 };
     initBricks(currentLevel);
@@ -149,17 +150,10 @@ function update() {
         }
     });
 
-    // AI action
-    if (aiPlaying) {
-        let state = getState();
-        let action = getAction(state, episodes); // pass episodes for epsilon
-        // Smooth movement
-        let targetX = paddle.x;
-        if (action === 0) targetX -= 5;
-        else if (action === 2) targetX += 5;
-        targetX = Math.max(0, Math.min(canvas.width - paddle.width, targetX));
-        paddle.x += (targetX - paddle.x) * 0.1; // easing
-        document.getElementById('aiInfo').textContent = `State: ${state}, Action: ${action === 0 ? 'Left' : action === 1 ? 'Stay' : 'Right'}`;
+    // Paddle movement
+    if (!aiPlaying && paddleDirection !== 0) {
+        paddle.x += paddleDirection * 5;
+        paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
     }
 }
 
@@ -211,14 +205,25 @@ gameLoop();
 // Controls
 document.addEventListener('keydown', (e) => {
     if (!aiPlaying && gameRunning && !paused) {
-        if (e.key === 'ArrowLeft') paddle.x -= 10;
-        if (e.key === 'ArrowRight') paddle.x += 10;
-        paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            paddleDirection = -1;
+        }
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            paddleDirection = 1;
+        }
     }
     if (e.key === ' ') {
         e.preventDefault();
         paused = !paused;
         document.getElementById('pause').textContent = paused ? 'Resume' : 'Pause';
+    }
+});
+
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        paddleDirection = 0;
     }
 });
 
