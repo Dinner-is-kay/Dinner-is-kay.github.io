@@ -309,6 +309,16 @@ document.getElementById('clearAI').addEventListener('click', () => {
     alert('AI memory cleared. Train again for best results.');
 });
 
+document.getElementById('train').addEventListener('click', () => {
+    training = true;
+    gameRunning = false;
+    aiPlaying = false;
+    paused = false;
+    difficulty = document.getElementById('difficulty').value;
+    soundEnabled = document.getElementById('soundEnabled').checked;
+    trainAI();
+});
+
 function trainAI() {
     let ep = 0;
     const totalEp = 10000;
