@@ -19,17 +19,18 @@ let training = false;
 let qTable = {};
 
 function getState() {
-    let ballX = Math.floor(ball.x / 80);
+    let ballX = Math.floor(ball.x / 40); // finer: 20 bins for 800px
     let ballY = Math.floor(ball.y / 60);
-    let paddleX = Math.floor(paddle.x / 80);
+    let paddleX = Math.floor(paddle.x / 40); // 20 bins
     let ballDirX = ball.dx > 0 ? 1 : 0;
     let ballDirY = ball.dy > 0 ? 1 : 0;
     return `${ballX},${ballY},${paddleX},${ballDirX},${ballDirY}`;
 }
 
-function getAction(state) {
+function getAction(state, ep) {
     if (!qTable[state]) qTable[state] = [0, 0, 0];
-    if (Math.random() < 0.1) return Math.floor(Math.random() * 3); // epsilon
+    let epsilon = Math.max(0.01, 0.1 - ep * 0.000005); // decay epsilon
+    if (Math.random() < epsilon) return Math.floor(Math.random() * 3);
     return qTable[state].indexOf(Math.max(...qTable[state]));
 }
 
@@ -83,7 +84,7 @@ function update() {
     // AI action
     if (aiPlaying) {
         let state = getState();
-        let action = getAction(state);
+        let action = getAction(state, episodes); // pass episodes for epsilon
         if (action === 0) paddle.x -= 5;
         else if (action === 2) paddle.x += 5;
         paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
@@ -158,7 +159,7 @@ function trainAI() {
         let steps = 0;
         while (ball.y < canvas.height && steps < 1000) {
             let state = getState();
-            let action = getAction(state);
+            let action = getAction(state, ep);
             if (action === 0) paddle.x -= 5;
             else if (action === 2) paddle.x += 5;
             paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
@@ -171,9 +172,11 @@ function trainAI() {
             if (ball.y - ball.radius > canvas.height) break;
 
             // Paddle collision
+            let paddleHit = false;
             if (ball.y + ball.radius >= paddle.y && ball.y - ball.radius <= paddle.y + paddle.height &&
                 ball.x >= paddle.x && ball.x <= paddle.x + paddle.width) {
                 ball.dy = -Math.abs(ball.dy);
+                paddleHit = true;
             }
 
             // Brick collisions
@@ -188,7 +191,8 @@ function trainAI() {
                 }
             });
 
-            let reward = 0.1; // small reward for surviving
+            let reward = 0.2; // increased survival reward
+            if (paddleHit) reward += 1; // reward for hitting ball back
             if (hitBrick) reward += 10;
             if (ball.y > canvas.height) reward = -10;
 
