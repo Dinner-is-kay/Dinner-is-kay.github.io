@@ -182,12 +182,22 @@ function draw() {
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.fill();
 
-    // Score
-    document.getElementById('score').textContent = `Score: ${score}`;
-    document.getElementById('highScore').textContent = `High Score: ${highScore}`;
-    document.getElementById('level').textContent = `Level: ${currentLevel}`;
-    document.getElementById('lives').textContent = `Lives: ${lives}`;
-    document.getElementById('episodes').textContent = `Episodes: ${episodes}`;
+    // UI
+    const scoreEl = document.getElementById('score');
+    if (scoreEl) scoreEl.textContent = `Score: ${score}`;
+    const highScoreEl = document.getElementById('highScore');
+    if (highScoreEl) highScoreEl.textContent = `High Score: ${highScore}`;
+    const levelEl = document.getElementById('level');
+    if (levelEl) levelEl.textContent = `Level: ${currentLevel}`;
+    const livesEl = document.getElementById('lives');
+    if (livesEl) livesEl.textContent = `Lives: ${lives}`;
+    const episodesEl = document.getElementById('episodes');
+    if (episodesEl) episodesEl.textContent = `Episodes: ${episodes}`;
+
+    if (aiPlaying) {
+        const aiInfoEl = document.getElementById('aiInfo');
+        if (aiInfoEl) aiInfoEl.textContent = `State: ${getState()}, Action: ${getAction(getState(), episodes) === 0 ? 'Left' : getAction(getState(), episodes) === 1 ? 'Stay' : 'Right'}`;
+    }
 }
 
 function gameLoop() {
