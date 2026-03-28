@@ -6,36 +6,56 @@
     <title>Breakout with RL</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #000;
-            color: #fff;
             font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
         }
         canvas {
-            border: 2px solid #fff;
+            border: 2px solid #3498db;
             background-color: #000;
+            display: block;
+            margin: 0 auto;
         }
         .controls {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            text-align: center;
+            margin: 20px 0;
         }
         button {
             margin: 5px;
-            padding: 10px;
+            padding: 10px 20px;
             font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .score-info {
+            text-align: center;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
+    <h1>Breakout with Reinforcement Learning</h1>
     <div class="controls">
         <button id="start">Start Game</button>
         <button id="train">Train AI</button>
         <button id="playAI">Play with AI</button>
+    </div>
+    <div class="score-info">
         <p id="score">Score: 0</p>
         <p id="episodes">Episodes: 0</p>
     </div>
