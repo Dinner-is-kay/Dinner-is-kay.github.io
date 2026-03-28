@@ -65,16 +65,14 @@ function playSound(frequency, duration, type = 'square') {
 
 function getState() {
     let paddleX = Math.floor(paddle.x / 80);
-    let relX = Math.floor((ball.x - paddle.x) / 25); // finer bins for better precision
+    let relX = Math.floor((ball.x - paddle.x) / 25);
     let ballY = Math.floor(ball.y / 60);
-    let ballDirX = ball.dx > 0 ? 1 : 0;
-    let ballDirY = ball.dy > 0 ? 1 : 0;
-    return `${paddleX},${relX},${ballY},${ballDirX},${ballDirY}`;
+    return `${paddleX},${relX},${ballY}`;
 }
 
 function getAction(state, ep) {
     if (!qTable[state]) qTable[state] = [0, 0, 0];
-    let epsilon = Math.max(0.01, 0.1 - ep * 0.000002); // slower decay
+    let epsilon = Math.max(0.01, 0.3 - ep * 0.000006); // higher exploration
     if (Math.random() < epsilon) return Math.floor(Math.random() * 3);
     return qTable[state].indexOf(Math.max(...qTable[state]));
 }
