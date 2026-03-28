@@ -32,7 +32,7 @@ let levels = {
 };
 
 // Q-table
-let qTable = {};
+let qTable = JSON.parse(localStorage.getItem('breakoutQTable')) || {};
 
 function initBricks(level) {
     bricks = [];
@@ -364,5 +364,6 @@ function trainAI() {
         if (ep % 1000 === 0) console.log(`Episode ${ep}, Score: ${score}`);
     }
     training = false;
+    localStorage.setItem('breakoutQTable', JSON.stringify(qTable));
     alert('Training complete!');
 }
