@@ -293,7 +293,7 @@ document.getElementById('train').addEventListener('click', () => {
 });
 
 function trainAI() {
-    for (let ep = 0; ep < 20000; ep++) {
+    for (let ep = 0; ep < 50000; ep++) {
         reset();
         let steps = 0;
         while (ball.y < canvas.height && steps < 1000 && lives > 0) {
@@ -336,7 +336,7 @@ function trainAI() {
             });
 
             let reward = 0.5; // increased survival reward
-            if (paddleHit) reward += 5; // higher reward for hitting ball back
+            if (paddleHit) reward += 10; // higher reward for hitting ball back
             if (hitBrick) reward += 10;
             if (ball.y > canvas.height) reward = -10;
 

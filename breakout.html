@@ -8,97 +8,127 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
+            margin: 10px;
+            padding: 10px;
             background-color: #f4f4f4;
             color: #333;
             max-width: 1000px;
             margin: 0 auto;
+            font-size: 14px;
         }
         h1 {
             color: #2c3e50;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .left-panel {
+            flex: 1;
+            min-width: 200px;
+        }
+        .right-panel {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         canvas {
             border: 2px solid #3498db;
             background-color: #000;
             display: block;
-            margin: 0 auto;
             max-width: 100%;
             height: auto;
         }
         .controls {
-            text-align: center;
-            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+            margin-bottom: 10px;
         }
         button {
-            margin: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
+            margin: 0;
+            padding: 8px 12px;
+            font-size: 12px;
             background-color: #3498db;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 3px;
             cursor: pointer;
         }
         button:hover {
             background-color: #2980b9;
         }
-        .score-info {
-            text-align: center;
-            margin: 10px 0;
-        }
         .settings {
-            text-align: center;
-            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 12px;
         }
-        select, input {
-            margin: 5px;
-            padding: 5px;
+        .score-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 12px;
         }
         .ai-info {
             text-align: center;
-            margin: 10px 0;
-            font-size: 14px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            min-height: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Breakout with Reinforcement Learning</h1>
-    <div class="settings">
-        <label>Difficulty: 
-            <select id="difficulty">
-                <option value="easy">Easy</option>
-                <option value="normal" selected>Normal</option>
-                <option value="hard">Hard</option>
-            </select>
-        </label>
-        <label>Level: 
-            <select id="levelSelect">
-                <option value="1">Level 1</option>
-                <option value="2">Level 2</option>
-                <option value="3">Level 3</option>
-            </select>
-        </label>
-        <label>Sound: <input type="checkbox" id="soundEnabled" checked></label>
+    <div class="container">
+        <div class="left-panel">
+            <div class="settings">
+                <label>Difficulty: 
+                    <select id="difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="normal" selected>Normal</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </label>
+                <label>Level: 
+                    <select id="levelSelect">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </label>
+                <label>Sound: <input type="checkbox" id="soundEnabled" checked></label>
+            </div>
+            <div class="controls">
+                <button id="start">Start</button>
+                <button id="pause">Pause</button>
+                <button id="train">Train AI</button>
+                <button id="playAI">Play AI</button>
+                <button id="reset">Reset</button>
+            </div>
+            <div class="score-info">
+                <span id="score">Score: 0</span>
+                <span id="highScore">High: 0</span>
+                <span id="level">Level: 1</span>
+                <span id="lives">Lives: 3</span>
+                <span id="episodes">Episodes: 0</span>
+            </div>
+            <div class="ai-info" id="aiInfo"></div>
+        </div>
+        <div class="right-panel">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+        </div>
     </div>
-    <div class="controls">
-        <button id="start">Start Game</button>
-        <button id="pause">Pause</button>
-        <button id="train">Train AI</button>
-        <button id="playAI">Play with AI</button>
-        <button id="reset">Reset Game</button>
-    </div>
-    <div class="score-info">
-        <p id="score">Score: 0</p>
-        <p id="highScore">High Score: 0</p>
-        <p id="level">Level: 1</p>
-        <p id="lives">Lives: 3</p>
-        <p id="episodes">Episodes: 0</p>
-    </div>
-    <div class="ai-info" id="aiInfo"></div>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
     <script src="breakout.js"></script>
 </body>
 </html></content>
