@@ -90,11 +90,6 @@ function reset() {
     ball = { x: 400, y: 300, dx: speed * (Math.random() > 0.5 ? 1 : -1), dy: speed, radius: 10 };
     paddle = { x: 350, y: 550, width: difficulty === 'easy' ? 120 : difficulty === 'hard' ? 80 : 100, height: 10 };
     initBricks(currentLevel);
-    score = 0;
-    if (score > highScore) {
-        highScore = score;
-        localStorage.setItem('breakoutHighScore', highScore);
-    }
 }
 
 function update() {
@@ -125,7 +120,10 @@ function update() {
             alert('Game Over!');
             return;
         } else {
-            reset();
+            // Reset ball and paddle for next life, keep score and level
+            let speed = difficulty === 'easy' ? 1 : difficulty === 'hard' ? 2 : 1.5;
+            ball = { x: 400, y: 300, dx: speed * (Math.random() > 0.5 ? 1 : -1), dy: speed, radius: 10 };
+            paddle = { x: 350, y: 550, width: difficulty === 'easy' ? 120 : difficulty === 'hard' ? 80 : 100, height: 10 };
             return;
         }
     }
@@ -268,6 +266,7 @@ document.getElementById('start').addEventListener('click', () => {
     currentLevel = parseInt(document.getElementById('levelSelect').value);
     difficulty = document.getElementById('difficulty').value;
     soundEnabled = document.getElementById('soundEnabled').checked;
+    score = 0;
     reset();
     document.getElementById('pause').textContent = 'Pause';
 });
@@ -286,6 +285,7 @@ document.getElementById('playAI').addEventListener('click', () => {
     currentLevel = parseInt(document.getElementById('levelSelect').value);
     difficulty = document.getElementById('difficulty').value;
     soundEnabled = document.getElementById('soundEnabled').checked;
+    score = 0;
     reset();
     document.getElementById('pause').textContent = 'Pause';
 });
@@ -310,7 +310,7 @@ document.getElementById('clearAI').addEventListener('click', () => {
 });
 
 function trainAI() {
-    for (let ep = 0; ep < 50000; ep++) {
+    for (let ep = 0; ep < 10000; ep++) {
         reset();
         let steps = 0;
         while (ball.y < canvas.height && steps < 1000 && lives > 0) {
