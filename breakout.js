@@ -19,12 +19,11 @@ let training = false;
 let qTable = {};
 
 function getState() {
-    let ballX = Math.floor(ball.x / 40); // finer: 20 bins for 800px
+    let relX = Math.floor((ball.x - paddle.x) / 50); // relative position in 50px bins
     let ballY = Math.floor(ball.y / 60);
-    let paddleX = Math.floor(paddle.x / 40); // 20 bins
     let ballDirX = ball.dx > 0 ? 1 : 0;
     let ballDirY = ball.dy > 0 ? 1 : 0;
-    return `${ballX},${ballY},${paddleX},${ballDirX},${ballDirY}`;
+    return `${relX},${ballY},${ballDirX},${ballDirY}`;
 }
 
 function getAction(state, ep) {
@@ -38,7 +37,7 @@ function updateQ(state, action, reward, nextState) {
     if (!qTable[state]) qTable[state] = [0, 0, 0];
     if (!qTable[nextState]) qTable[nextState] = [0, 0, 0];
     let maxNext = Math.max(...qTable[nextState]);
-    qTable[state][action] += 0.1 * (reward + 0.9 * maxNext - qTable[state][action]);
+    qTable[state][action] += 0.1 * (reward + 0.95 * maxNext - qTable[state][action]);
 }
 
 function reset() {
@@ -191,8 +190,8 @@ function trainAI() {
                 }
             });
 
-            let reward = 0.2; // increased survival reward
-            if (paddleHit) reward += 1; // reward for hitting ball back
+            let reward = 0.5; // increased survival reward
+            if (paddleHit) reward += 5; // higher reward for hitting ball back
             if (hitBrick) reward += 10;
             if (ball.y > canvas.height) reward = -10;
 
