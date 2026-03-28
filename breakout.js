@@ -155,6 +155,17 @@ function update() {
         paddle.x += paddleDirection * 5;
         paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
     }
+
+    // AI action
+    if (aiPlaying) {
+        let state = getState();
+        let action = getAction(state, episodes);
+        if (action === 0) paddle.x -= 10;
+        else if (action === 2) paddle.x += 10;
+        paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
+        const aiInfoEl = document.getElementById('aiInfo');
+        if (aiInfoEl) aiInfoEl.textContent = `State: ${state}, Action: ${action === 0 ? 'Left' : action === 1 ? 'Stay' : 'Right'}`;
+    }
 }
 
 function draw() {
