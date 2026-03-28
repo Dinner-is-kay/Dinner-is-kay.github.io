@@ -310,59 +310,75 @@ document.getElementById('clearAI').addEventListener('click', () => {
 });
 
 function trainAI() {
-    for (let ep = 0; ep < 10000; ep++) {
-        reset();
-        let steps = 0;
-        while (ball.y < canvas.height && steps < 1000 && lives > 0) {
-            let state = getState();
-            let action = getAction(state, ep);
-            if (action === 0) paddle.x -= 5;
-            else if (action === 2) paddle.x += 5;
-            paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
+    let ep = 0;
+    const totalEp = 10000;
+    const batchSize = 100;
 
-            // Move ball
-            ball.x += ball.dx;
-            ball.y += ball.dy;
-            if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) ball.dx = -ball.dx;
-            if (ball.y - ball.radius < 0) ball.dy = -ball.dy;
-            if (ball.y - ball.radius > canvas.height) {
-                lives--;
-                break;
-            }
+    function trainBatch() {
+        for (let i = 0; i < batchSize && ep < totalEp; i++, ep++) {
+            reset();
+            let steps = 0;
+            while (ball.y < canvas.height && steps < 1000 && lives > 0) {
+                let state = getState();
+                let action = getAction(state, ep);
+                if (action === 0) paddle.x -= 5;
+                else if (action === 2) paddle.x += 5;
+                paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
 
-            // Paddle collision
-            let paddleHit = false;
-            if (ball.y + ball.radius >= paddle.y && ball.y - ball.radius <= paddle.y + paddle.height &&
-                ball.x >= paddle.x && ball.x <= paddle.x + paddle.width) {
-                ball.dy = -Math.abs(ball.dy);
-                paddleHit = true;
-            }
-
-            // Brick collisions
-            let hitBrick = false;
-            bricks.forEach(brick => {
-                if (brick.alive &&
-                    ball.x + ball.radius >= brick.x && ball.x - ball.radius <= brick.x + brick.width &&
-                    ball.y + ball.radius >= brick.y && ball.y - ball.radius <= brick.y + brick.height) {
-                    brick.alive = false;
-                    ball.dy = -ball.dy;
-                    hitBrick = true;
+                // Move ball
+                ball.x += ball.dx;
+                ball.y += ball.dy;
+                if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) ball.dx = -ball.dx;
+                if (ball.y - ball.radius < 0) ball.dy = -ball.dy;
+                if (ball.y - ball.radius > canvas.height) {
+                    lives--;
+                    break;
                 }
-            });
 
-            let reward = 1; // increased survival reward
-            if (paddleHit) reward += 5; // reward for hitting ball back
-            if (hitBrick) reward += 10;
-            if (ball.y > canvas.height) reward = -10;
+                // Paddle collision
+                let paddleHit = false;
+                if (ball.y + ball.radius >= paddle.y && ball.y - ball.radius <= paddle.y + paddle.height &&
+                    ball.x >= paddle.x && ball.x <= paddle.x + paddle.width) {
+                    ball.dy = -Math.abs(ball.dy);
+                    paddleHit = true;
+                }
 
-            let nextState = getState();
-            updateQ(state, action, reward, nextState);
-            steps++;
+                // Brick collisions
+                let hitBrick = false;
+                bricks.forEach(brick => {
+                    if (brick.alive &&
+                        ball.x + ball.radius >= brick.x && ball.x - ball.radius <= brick.x + brick.width &&
+                        ball.y + ball.radius >= brick.y && ball.y - ball.radius <= brick.y + brick.height) {
+                        brick.alive = false;
+                        ball.dy = -ball.dy;
+                        hitBrick = true;
+                    }
+                });
+
+                let reward = 1; // increased survival reward
+                if (paddleHit) reward += 5; // reward for hitting ball back
+                if (hitBrick) reward += 10;
+                if (ball.y > canvas.height) reward = -10;
+
+                let nextState = getState();
+                updateQ(state, action, reward, nextState);
+                steps++;
+            }
+            episodes++;
         }
-        episodes++;
-        if (ep % 1000 === 0) console.log(`Episode ${ep}, Score: ${score}`);
+
+        // Update progress
+        const episodesEl = document.getElementById('episodes');
+        if (episodesEl) episodesEl.textContent = `Episodes: ${episodes}`;
+
+        if (ep < totalEp) {
+            setTimeout(trainBatch, 0); // Yield to UI
+        } else {
+            training = false;
+            localStorage.setItem('breakoutQTable', JSON.stringify(qTable));
+            alert('Training complete!');
+        }
     }
-    training = false;
-    localStorage.setItem('breakoutQTable', JSON.stringify(qTable));
-    alert('Training complete!');
+
+    trainBatch();
 }
