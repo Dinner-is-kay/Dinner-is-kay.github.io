@@ -82,7 +82,7 @@ function updateQ(state, action, reward, nextState) {
     if (!qTable[state]) qTable[state] = [0, 0, 0];
     if (!qTable[nextState]) qTable[nextState] = [0, 0, 0];
     let maxNext = Math.max(...qTable[nextState]);
-    qTable[state][action] += 0.1 * (reward + 0.95 * maxNext - qTable[state][action]);
+    qTable[state][action] += 0.05 * (reward + 0.99 * maxNext - qTable[state][action]);
 }
 
 function reset() {
@@ -160,8 +160,8 @@ function update() {
     if (aiPlaying) {
         let state = getState();
         let action = getAction(state, episodes);
-        if (action === 0) paddle.x -= 10;
-        else if (action === 2) paddle.x += 10;
+        if (action === 0) paddle.x -= 5;
+        else if (action === 2) paddle.x += 5;
         paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
         const aiInfoEl = document.getElementById('aiInfo');
         if (aiInfoEl) aiInfoEl.textContent = `State: ${state}, Action: ${action === 0 ? 'Left' : action === 1 ? 'Stay' : 'Right'}`;
@@ -351,8 +351,8 @@ function trainAI() {
                 }
             });
 
-            let reward = 0.5; // increased survival reward
-            if (paddleHit) reward += 10; // higher reward for hitting ball back
+            let reward = 1; // increased survival reward
+            if (paddleHit) reward += 5; // reward for hitting ball back
             if (hitBrick) reward += 10;
             if (ball.y > canvas.height) reward = -10;
 
