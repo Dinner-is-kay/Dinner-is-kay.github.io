@@ -165,7 +165,7 @@ function update() {
         if (action === 0) targetX -= 5;
         else if (action === 2) targetX += 5;
         targetX = Math.max(0, Math.min(canvas.width - paddle.width, targetX));
-        paddle.x += (targetX - paddle.x) * 0.2; // smooth movement
+        paddle.x += (targetX - paddle.x) * 0.5; // faster smooth movement
         const aiInfoEl = document.getElementById('aiInfo');
         if (aiInfoEl) aiInfoEl.textContent = `State: ${state}, Action: ${action === 0 ? 'Left' : action === 1 ? 'Stay' : 'Right'}`;
     }
@@ -332,9 +332,11 @@ function trainAI() {
             while (ball.y < canvas.height && steps < 1000 && lives > 0) {
                 let state = getState();
                 let action = getAction(state, ep);
-                if (action === 0) paddle.x -= 5;
-                else if (action === 2) paddle.x += 5;
-                paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
+                let targetX = paddle.x;
+                if (action === 0) targetX -= 5;
+                else if (action === 2) targetX += 5;
+                targetX = Math.max(0, Math.min(canvas.width - paddle.width, targetX));
+                paddle.x += (targetX - paddle.x) * 0.5;
 
                 // Move ball
                 ball.x += ball.dx;
