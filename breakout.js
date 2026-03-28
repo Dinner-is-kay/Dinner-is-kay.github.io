@@ -81,7 +81,7 @@ function updateQ(state, action, reward, nextState) {
     if (!qTable[state]) qTable[state] = [0, 0, 0];
     if (!qTable[nextState]) qTable[nextState] = [0, 0, 0];
     let maxNext = Math.max(...qTable[nextState]);
-    qTable[state][action] += 0.05 * (reward + 0.99 * maxNext - qTable[state][action]);
+    qTable[state][action] += 0.01 * (reward + 0.99 * maxNext - qTable[state][action]); // lower learning rate
 }
 
 function reset() {
@@ -161,9 +161,11 @@ function update() {
     if (aiPlaying) {
         let state = getState();
         let action = getAction(state, episodes);
-        if (action === 0) paddle.x -= 5;
-        else if (action === 2) paddle.x += 5;
-        paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, paddle.x));
+        let targetX = paddle.x;
+        if (action === 0) targetX -= 5;
+        else if (action === 2) targetX += 5;
+        targetX = Math.max(0, Math.min(canvas.width - paddle.width, targetX));
+        paddle.x += (targetX - paddle.x) * 0.2; // smooth movement
         const aiInfoEl = document.getElementById('aiInfo');
         if (aiInfoEl) aiInfoEl.textContent = `State: ${state}, Action: ${action === 0 ? 'Left' : action === 1 ? 'Stay' : 'Right'}`;
     }
