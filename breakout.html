@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakout with RL</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 2px solid #fff;
+            background-color: #000;
+        }
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <button id="start">Start Game</button>
+        <button id="train">Train AI</button>
+        <button id="playAI">Play with AI</button>
+        <p id="score">Score: 0</p>
+        <p id="episodes">Episodes: 0</p>
+    </div>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
+    <script src="breakout.js"></script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\Wyatt\Downloads\breakout.html
