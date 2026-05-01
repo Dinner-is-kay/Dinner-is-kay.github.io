@@ -4,52 +4,79 @@ This markdown file is designed to be converted into a PowerPoint presentation. E
 
 ## Title
 
-- Welcome to my career presentation
-- Overview of my professional journey
-- Key achievements and goals
+- Career Choice: Historian
+- Wyatt Leopold
+- AI 109
+- 4/30/26
 
 ---
 
 ## What does a historian do
 
-- Educational background
-- Relevant experience
-- Skills and competencies
+- Studies, interprets, and presents the past
+- Works in academia, museums, archives, government
+- Analyzes primary & secondary sources
+- Communicates through writing, teaching, exhibits
 
 ---
+
+## Why I chose this career
+
+- Lifelong interest from museums & historic sites
+- Passion grew through school and university
+- Enjoy exploring different time periods and ideas
+- Opportunity to connect past and present
+
+---
+
 
 ## Key skills
 
-- Short-term objectives
-- Long-term aspirations
-- How I plan to achieve them
-
----
-
-
-## Why this career
-
-- Summary of key points
-- Future outlook
-- Thank you
+- Critical reading & analytical thinking
+- Strong writing and argumentation
+- Research methods & source evaluation
+- Attention to detail
+- Synthesizing large amounts of information
+ Communication for different audiences
 
 ---
 
 ## AI disruption
+- Automates archival research (OCR, digitization)
+- Transcribes and searches historical documents
+- Generates summaries and draft narratives
+- Changes teaching (lesson plans, grading tools)
+- Raises concerns about authenticity and originality
 
 ---
 
-## AI benefits
-
+## Impact of AI on the field
+- Reduces need for manual research tasks
+- Increases productivity expectations
+- Shifts historians toward interpretation roles
+- Challenges how we define original scholarship
+  
 ---
 
-## gaining an advantage
+## AI benifits
+- Faster source discovery and research
+- Summarizes large bodies of scholarship
+- Improves writing clarity and organization
+- Expands access to global and translated sources
+- Enhances public history (digital exhibits, interaction)
+  
+---
+
+## Gaining an advantage
+- Master AI-assisted research workflows
+- Develop strong, original interpretations
+- Learn digital humanities tools (data, GIS, text analysis)
+- Maintain academic integrity and credibility
 
 ---
 
 ## Action plan
-
----
-
-## main takeaway
-*Note: Replace this template with your actual career essay content, adapted for slide format. Use bullet points, images, and minimal text per slide for best PowerPoint conversion.*
+- Use AI tools regularly for research and note-taking
+- Build a strong portfolio of original writing
+- Learn digital research tools and methods
+- Gain experience with primary sources (archives)
