@@ -7,28 +7,17 @@ The daily work of a historian varies depending on specialization but typically i
 
 With the advent of LLMs entering the public sphere in a manner never before seen, they have created challenges for many industries. Many people have been fired across the job market either directly or indirectly due to AI in some form or fashion, and the historian profession has certianly not been unaffected by this recent development, particularly in the research and writing areas. One major area of disruption is archival research. AI tools can rapidly scan, digitize, and analyze large collections of documents, reducing the need for manual searching. Optical character recognition (OCR) and machine learning models can transcribe handwritten texts, making previously inaccessible sources searchable and further reducing the need for people in the historian field like translators. Another area is writing and synthesis. AI also can generate summaries of secondary literature, suggest interpretations, and even produce draft historical narratives. This could reduce demand for some traditional research roles or change expectations for productivity. AI may also impact teaching, as automated tools can generate lesson plans, grade assignments, and provide tutoring. This could shift the role of historians in education from content delivery to facilitation and interpretation. Finally, AI introduces challenges in authenticity and originality. If AI can generate convincing historical writing, it may become harder to distinguish between original scholarship and machine-assisted work. All these have combined to reduce human reliance in many parts of the historian field where previously the only way to fufill them was with a human.
 
-## Professional Experience
+However, it is not all doom and gloom. While AI indeed can take over many areas and jobs that were previously occupied by humans, and while legitamate concerns and debates rage about things such as the accuracy of the data it provides and how to tell if something is written by an AI or by a person, there are still new opportunities opening up for those willing to explore them. AI can dramatically improve research efficiency via having tools that can quickly locate relevant sources, summarize large bodies of scholarship, and identify patterns across texts that would be difficult for a human to detect. This allows historians to spend more time on interpretation and argument rather than data collection. AI also enhances accessibility, with digitization and translation tools can make sources available across languages and regions, allowing historians to work more globally and inclusively. In writing, AI can assist with editing, organization, and clarity, helping historians refine arguments and improve readability. It can also help generate outlines or suggest alternative interpretations, acting as a kind of intellectual collaborator. For public history, AI can support interactive exhibits, digital reconstructions, and audience engagement, making historical content more accessible and engaging for broader audiences. These are only a few of the myriad of ways that AI can help to aid historians in their research and work, instead of replacing them completely
 
-Detail your work experience, internships, or volunteer roles that have shaped your career path.
+To stand out in an AI-influenced version of this career, a future historian must learn to use AI strategically rather than compete with it, although this is of course easier said than done as rapid changes continue to sweep the job landscape. One key strategy is mastering AI-assisted research workflows. This includes using AI tools to search archives, summarize texts, and organize notes efficiently. Someone who can process information faster while maintaining accuracy will have a significant advantage. Another strategy is developing strong interpretive skills. Since AI can generate information but not truly understand context in the same way humans do, the ability to craft nuanced, original arguments will become even more valuable. A third strategy is learning digital humanities tools, such as text analysis software, data visualization, and GIS mapping. Combining traditional historical skills with technical abilities will make a candidate more versatile. Finally, maintaining intellectual integrity is critical. Clearly distinguishing between AI-assisted work and original analysis will help build credibility in a field that values authenticity.
 
-## Skills and Strengths
+Over the next year, I can take several concrete steps to prepare for this career in an AI-influenced environment:
++ Learn and experiment with AI research tools
+ I will regularly use AI tools to summarize articles, generate research questions, and organize notes, while critically evaluating their accuracy.
++ Develop a strong writing portfolio
+ I will produce several polished research papers or essays that demonstrate original argumentation and clear writing, ensuring that my voice remains distinct from AI-generated content.
++ Gain experience with digital tools
+ I will explore digital humanities methods such as text analysis or database organization, possibly through online tutorials or coursework.
++ Engage with primary sources directly
+ I will practice archival research, either through digital archives or in-person collections, to build skills that AI cannot fully replace.
 
-List key skills, both technical and soft skills, that you possess and how they contribute to your career.
-
-## Career Goals
-
-Explain your short-term and long-term career objectives. What industry or role are you aiming for?
-
-## Challenges and Solutions
-
-Discuss any challenges you have faced in your career development and how you have overcome them.
-
-## Future Plans
-
-Outline the steps you plan to take to reach your goals, such as further education, networking, or skill development.
-
-## Conclusion
-
-Summarize the main points of your career report and reiterate your commitment to your professional growth.
-
-*Note: Replace this template with the full content of your career essay. Ensure the structure preserves the main argument and flow of your original report.*
